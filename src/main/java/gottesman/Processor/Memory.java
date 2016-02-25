@@ -14,7 +14,4 @@ public class Memory {
 		return this.memory;
 	}
 
-	public void setMemory(String[] memory) {
-		this.memory = memory;
-	}
 }

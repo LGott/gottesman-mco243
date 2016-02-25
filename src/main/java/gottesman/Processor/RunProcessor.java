@@ -27,6 +27,7 @@ public class RunProcessor {
 				processedMemory = processor.getMemory();
 
 				for (String s : processedMemory) {
+
 					System.out.print(s);
 				}
 				System.out.println();

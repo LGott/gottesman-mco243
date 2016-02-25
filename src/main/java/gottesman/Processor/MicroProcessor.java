@@ -21,35 +21,35 @@ public class MicroProcessor {
 
 	public void processMemory() {
 
-		while ((index < memory.length) && (Integer.parseInt(memory[index]) != 8)) {
+		while ((index < memory.length) && (!(memory[index]).equals("8"))) {
 
-			switch (Integer.parseInt(memory[index])) {
+			switch ((memory[index])) {
 
-			case 0:
+			case "0":
 				load();
 				break;
-			case 1:
+			case "1":
 				store();
 				break;
-			case 2:
+			case "2":
 				swap();
 				break;
-			case 3:
+			case "3":
 				add();
 				break;
-			case 4:
+			case "4":
 				increment();
 				break;
-			case 5:
+			case "5":
 				decrement();
 				break;
-			case 6:
+			case "6":
 				bz();
 				break;
-			case 7:
+			case "7":
 				br();
 				break;
-			case 8:
+			case "8":
 				return;
 
 			}
@@ -63,8 +63,8 @@ public class MicroProcessor {
 		// argument.
 
 		// Parse the contents of the specified memory locations
-		int address1 = Integer.parseInt(memory[index++], 16);
-		int address2 = Integer.parseInt(memory[index++], 16);
+		int address1 = Integer.parseInt(memory[++index], 16);
+		int address2 = Integer.parseInt(memory[++index], 16);
 
 		address1 *= 16;
 
@@ -83,13 +83,13 @@ public class MicroProcessor {
 		// ST: Write the contents of accumulator A to the memory location
 		// specified by the argument.
 
-		int address1 = Integer.parseInt(memory[index++], 16);
-		int address2 = Integer.parseInt(memory[index++], 16);
+		int address1 = Integer.parseInt(memory[++index], 16);
+		int address2 = Integer.parseInt(memory[++index], 16);
 
 		address1 *= 16; // Change to hex
 
 		int newAddress = address1 + address2; // get the new address
-		memory[newAddress] = accumulatorA;
+		this.memory[newAddress] = accumulatorA;
 
 		index++;
 
@@ -137,11 +137,37 @@ public class MicroProcessor {
 		// Overflow is allowed; that is, incrementing F yields 0.
 
 		// If accumulatorA is F, then set it equal to 0
+
 		if (accumulatorA.equals("F")) {
 			accumulatorA = "0";
+		}
+
+		else if (accumulatorA.equals("A")) {
+			accumulatorA = "B";
+		}
+
+		else if (accumulatorA.equals("B")) {
+			accumulatorA = "C";
+		}
+
+		else if (accumulatorA.equals("C")) {
+			accumulatorA = "D";
+		}
+
+		else if (accumulatorA.equals("D")) {
+			accumulatorA = "E";
+		}
+
+		else if (accumulatorA.equals("E")) {
+			accumulatorA = "F";
+		}
+
+		else if (accumulatorA.equals("9")) {
+			accumulatorA = "A";
+
 		} else {
 
-			int num = Integer.parseInt(String.valueOf(accumulatorA), 16);
+			int num = Integer.parseInt(accumulatorA);
 			num++;
 			accumulatorA = Integer.toString(num).toUpperCase();
 		}
@@ -152,12 +178,37 @@ public class MicroProcessor {
 		// DEC: Decrement accumulator A.
 		// Underflow is allowed; that is, decrementing 0 yields F.
 
-		if (accumulatorA.equals("F")) {
-			accumulatorA = "0";
+		if (accumulatorA.equals("0")) {
+			accumulatorA = "F";
+
 		}
 
-		else {
-			int num = Integer.parseInt(accumulatorA, 16);
+		else if (accumulatorA.equals("F")) {
+			accumulatorA = "E";
+		}
+
+		else if (accumulatorA.equals("E")) {
+			accumulatorA = "D";
+		}
+
+		else if (accumulatorA.equals("D")) {
+			accumulatorA = "C";
+		}
+
+		else if (accumulatorA.equals("C")) {
+			accumulatorA = "B";
+		}
+
+		else if (accumulatorA.equals("B")) {
+			accumulatorA = "A";
+		}
+
+		else if (accumulatorA.equals("A")) {
+			accumulatorA = "9";
+
+		} else {
+
+			int num = Integer.parseInt(accumulatorA);
 			num--;
 			accumulatorA = Integer.toString(num).toUpperCase();
 		}
@@ -173,10 +224,10 @@ public class MicroProcessor {
 
 		if (accumulatorA.equals("0")) {
 
-			int address1 = Integer.parseInt(memory[index++], 16);
-			int address2 = Integer.parseInt(memory[index++], 16);
+			int address1 = Integer.parseInt(memory[++index], 16);
+			int address2 = Integer.parseInt(memory[++index], 16);
 
-			address2 *= 16;
+			address1 *= 16;
 
 			index = address1 + address2;
 
@@ -190,8 +241,8 @@ public class MicroProcessor {
 		// BR: The next command to be executed is at the location
 		// specified by the argument.
 
-		int address1 = Integer.parseInt(memory[index++], 16);
-		int address2 = Integer.parseInt(memory[index++], 16);
+		int address1 = Integer.parseInt(memory[index + 1], 16);
+		int address2 = Integer.parseInt(memory[index + 2], 16);
 
 		address1 *= 16;
 
